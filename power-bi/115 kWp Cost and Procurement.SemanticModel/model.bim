@@ -1,0 +1,179 @@
+{
+  "compatibilityLevel": 1567,
+  "model": {
+    "culture": "en-US",
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "sourceQueryCulture": "en-GB",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "tables": [
+      {
+        "name": "Cost",
+        "description": "Budget and forecast for each BOM line, from the Cost sheet of the Excel tracker.",
+        "columns": [
+          {
+            "name": "Line",
+            "dataType": "int64",
+            "sourceColumn": "Line",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Item",
+            "dataType": "string",
+            "sourceColumn": "Item",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Category",
+            "dataType": "string",
+            "sourceColumn": "Category",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Budget (PKR)",
+            "dataType": "double",
+            "sourceColumn": "Budget (PKR)",
+            "summarizeBy": "sum",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Forecast (PKR)",
+            "dataType": "double",
+            "sourceColumn": "Forecast (PKR)",
+            "summarizeBy": "sum",
+            "formatString": "#,0"
+          }
+        ],
+        "measures": [
+          {
+            "name": "Budget",
+            "expression": "SUM ( Cost[Budget (PKR)] )",
+            "formatString": "#,0",
+            "description": "Total budget."
+          },
+          {
+            "name": "Forecast",
+            "expression": "SUM ( Cost[Forecast (PKR)] )",
+            "formatString": "#,0",
+            "description": "Total forecast cost."
+          },
+          {
+            "name": "Variance",
+            "expression": "[Budget] - [Forecast]",
+            "formatString": "#,0;-#,0;0",
+            "description": "Budget minus forecast. Negative means over budget."
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Cost",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Excel.Workbook(File.Contents(\"C:\\Users\\usama\\Desktop\\Power BI project\\data\\excel-tracker.xlsx\"), null, true),",
+                "    Data = Source{[Item=\"tblCost\",Kind=\"Table\"]}[Data],",
+                "    #\"Removed Other Columns\" = Table.SelectColumns(Data, {\"Line\", \"Item\", \"Category\", \"Budget (PKR)\", \"Forecast (PKR)\"}),",
+                "    #\"Filtered Rows\" = Table.SelectRows(#\"Removed Other Columns\", each [Line] <> null),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Filtered Rows\", {{\"Line\", Int64.Type}, {\"Item\", type text}, {\"Category\", type text}, {\"Budget (PKR)\", type number}, {\"Forecast (PKR)\", type number}})",
+                "in",
+                "    #\"Changed Type\""
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Procurement",
+        "description": "Order-by date and status for each BOM line, from the Procurement sheet.",
+        "columns": [
+          {
+            "name": "Line",
+            "dataType": "int64",
+            "sourceColumn": "Line",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Item",
+            "dataType": "string",
+            "sourceColumn": "Item",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Needed for",
+            "dataType": "string",
+            "sourceColumn": "Needed for",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Required on site",
+            "dataType": "dateTime",
+            "sourceColumn": "Required on site",
+            "summarizeBy": "none",
+            "formatString": "ddd dd mmm"
+          },
+          {
+            "name": "Order by",
+            "dataType": "dateTime",
+            "sourceColumn": "Order by",
+            "summarizeBy": "none",
+            "formatString": "ddd dd mmm"
+          },
+          {
+            "name": "Days in hand",
+            "dataType": "int64",
+            "sourceColumn": "Days in hand",
+            "summarizeBy": "none",
+            "formatString": "0"
+          },
+          {
+            "name": "Status",
+            "dataType": "string",
+            "sourceColumn": "Status",
+            "summarizeBy": "none"
+          }
+        ],
+        "measures": [
+          {
+            "name": "Lines",
+            "expression": "COUNTROWS ( Procurement )",
+            "formatString": "0",
+            "description": "Number of BOM lines."
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Procurement",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Excel.Workbook(File.Contents(\"C:\\Users\\usama\\Desktop\\Power BI project\\data\\excel-tracker.xlsx\"), null, true),",
+                "    Data = Source{[Item=\"tblProc\",Kind=\"Table\"]}[Data],",
+                "    #\"Removed Other Columns\" = Table.SelectColumns(Data, {\"Line\", \"Item\", \"Needed for\", \"Required on site\", \"Order by\", \"Days in hand\", \"Status\"}),",
+                "    #\"Filtered Rows\" = Table.SelectRows(#\"Removed Other Columns\", each [Line] <> null),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Filtered Rows\", {{\"Line\", Int64.Type}, {\"Item\", type text}, {\"Needed for\", type text}, {\"Required on site\", type date}, {\"Order by\", type date}, {\"Days in hand\", Int64.Type}, {\"Status\", type text}})",
+                "in",
+                "    #\"Changed Type\""
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "annotations": [
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"Cost\",\"Procurement\"]"
+      },
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "0"
+      }
+    ]
+  }
+}
