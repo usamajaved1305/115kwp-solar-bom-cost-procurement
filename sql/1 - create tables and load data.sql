@@ -1,4 +1,4 @@
--- SQL project: 115 kWp commercial rooftop, Islamabad (sample project, indicative PKR rates).
+-- SQL project: 115 kWp commercial rooftop, Islamabad (indicative PKR rates).
 -- Run this whole file once (Execute SQL tab, then Execute all) to create the two tables and load the data.
 
 -- Part 1: create the tables

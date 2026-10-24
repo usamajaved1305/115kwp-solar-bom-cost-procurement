@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Demonstration project. Data comes from my Excel tracker (illustrative PKR rates), status date Mon 21 Sep 2026.",
+                    "value": "Data comes from my Excel tracker (indicative PKR rates, example dates).",
                     "textStyle": {
                       "fontSize": "11pt",
                       "color": "#5A626E"

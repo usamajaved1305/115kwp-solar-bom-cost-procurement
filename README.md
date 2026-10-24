@@ -1,12 +1,12 @@
 ﻿# 115 kWp Commercial Rooftop Solar PV: BOM, Procurement and Cost Control in Excel, SQL and Power BI
 
-Live on portfolio: **[usamajaved.ie](https://usamajaved.ie/roles/planning)**
+Live on portfolio: **[usamajaved.ie](https://usamajaved.ie)**
 
-Bill of materials, string voltage verification, procurement lead-time tracking and cost control for a **115 kWp commercial rooftop PV system** in Islamabad (**198 Jinko 580 W modules** in 11 strings of 18 on a **Huawei SUN2000-100KTL-M2** inverter). This is a sample project: module and inverter data come from the manufacturers' datasheets, and the PKR rates are indicative.
+Bill of materials, string voltage verification, procurement lead-time tracking and cost control for a **115 kWp commercial rooftop PV system** in Islamabad (**198 Jinko 580 W modules** in 11 strings of 18 on a **Huawei SUN2000-100KTL-M2** inverter). Module and inverter data come from the manufacturers' datasheets, the order and delivery dates are examples, and the PKR rates are indicative.
 
 ---
 
-## 1. Advanced Excel Workbook (`excel/115-kWp-commercial-rooftop-excel-demo.xlsx`)
+## 1. Advanced Excel Workbook (`excel/115-kWp-commercial-rooftop-bom-and-cost-tracker.xlsx`)
 
 Checks the string design against the inverter's voltage limit, prices the 19-line bill of materials, sets an order-by date for each item from the date it is needed on site, and tracks budget against committed and forecast cost.
 
@@ -37,7 +37,7 @@ A one-page report for the same 115 kWp rooftop, fed from the Excel tracker. It s
 
 ## 3. SQLite Database and Queries (`sql/`)
 
-An SQLite database (`sql/solar_project.db` and `sql/115-kWp-commercial-rooftop-sql-demo.sql`) built from the Excel tracker with two linked tables:
+An SQLite database (`sql/solar_project.db` and `sql/115-kWp-commercial-rooftop-procurement-database.sql`) built from the Excel tracker with two linked tables:
 - `bom`: quantity, unit rate, budget and forecast for each of the 19 lines (`line` primary key).
 - `procurement`: order-by date, delivery date and status for each line, linked to `bom` on `line`.
 
@@ -52,8 +52,8 @@ Seven queries in `sql/2 - queries.sql` pull out the most expensive items, the bu
 
 ## Related Solar PV Engineering, Planning and Analytics Projects by Usama Javed
 
-- **Portfolio Website**: [usamajaved.ie](https://usamajaved.ie) ([Project Planner / Scheduler](https://usamajaved.ie/roles/planning) · [Solar Project / Technical Engineer](https://usamajaved.ie/roles/project-engineering) · [Site Supervisor / Field Delivery](https://usamajaved.ie/roles/site-delivery) · [Energy / Reporting Analyst](https://usamajaved.ie/roles/energy-analytics))
-- **[80kw-pv-bess-autocad-dispatch](https://github.com/usamajaved1305/80kw-pv-bess-autocad-dispatch)**: 80 kW commercial rooftop PV and 63 kWh FoxESS battery storage in AutoCAD 2027 (A1 sheets PV-01, PV-03, PV-04) and 8,760-hour Python dispatch simulation
+- **Portfolio Website**: [usamajaved.ie](https://usamajaved.ie) ([Project Planning Engineer](https://usamajaved.ie/roles/planning) · [Solar PV Project Engineer](https://usamajaved.ie/roles/project-engineering) · [Solar Site Supervisor](https://usamajaved.ie/roles/site-delivery) · [Energy and Reporting Analyst](https://usamajaved.ie/roles/energy-analytics))
+- **[80kw-pv-bess-autocad-dispatch](https://github.com/usamajaved1305/80kw-pv-bess-autocad-dispatch)**: 79 kWp commercial rooftop PV on an 80 kW hybrid inverter with 63 kWh FoxESS battery storage in AutoCAD 2027 (design study) (A1 sheets PV-01, PV-03, PV-04) and 8,760-hour Python dispatch simulation
 - **[115kwp-solar-energy-yield-python](https://github.com/usamajaved1305/115kwp-solar-energy-yield-python)**: 115 kWp commercial rooftop PV energy yield model in Python (Jupyter, pandas, matplotlib, PVGIS ERA5) and HelioScope simulation
 - **[115kwp-solar-bom-cost-procurement](https://github.com/usamajaved1305/115kwp-solar-bom-cost-procurement)**: 115 kWp commercial rooftop PV BOM, string voltage verification, procurement tracker and cost control in Excel, SQLite and Power BI
 - **[20kw-rooftop-pv-schedule-and-shading](https://github.com/usamajaved1305/20kw-rooftop-pv-schedule-and-shading)**: 20 kW residential rooftop PV installation programme (Primavera P6 and MS Project), OpenSolar proposal and SketchUp 3D ray-traced shading check
